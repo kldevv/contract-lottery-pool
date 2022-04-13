@@ -16,7 +16,8 @@ contract LotteryPool {
     }
 
     function draw() public restricted {
-        uint256 winner = getRandomInt() / tickets.length;
+        require(tickets.length > 0);
+        uint256 winner = getRandomInt() % tickets.length;
         tickets[winner].transfer(address(this).balance);
         tickets = new address payable[](0);
     }

@@ -84,5 +84,37 @@ describe('Contract Interaction' ,() => {
         assert.equal(tickets[2], accounts[0]);
     });
 
-    // it('Admin privilege set.', ()
+    it('Admin drawing privilege set.', async () => {
+        await lotteryPool.methods.enter().send({
+            from: accounts[0],
+            value: web3.utils.toWei('2', 'ether')
+        });
+        try {
+            await lotteryPool.methods.draw().send({
+                from: accounts[1]
+            });
+            assert.ok(false);
+        } catch (err) {
+            assert.ok(err);
+        }
+    });
+
+
+    it('Drawing set.', async () => {
+        const initialBalance = await web3.eth.getBalance(accounts[0]);
+
+        await lotteryPool.methods.enter().send({
+            from: accounts[0],
+            value: web3.utils.toWei('2', 'ether')
+        });
+
+        await lotteryPool.methods.draw().send({
+            from: accounts[0]
+        });
+        
+        const finalBalance = await web3.eth.getBalance(accounts[0]);
+        const gasOffset = web3.utils.toWei('0.2', 'ether');
+
+        assert.ok(initialBalance - finalBalance < gasOffset);
+    });
 });
