@@ -115,6 +115,12 @@ describe('Contract Interaction' ,() => {
         const finalBalance = await web3.eth.getBalance(accounts[0]);
         const gasOffset = web3.utils.toWei('0.2', 'ether');
 
+
+        const tickets = await lotteryPool.methods.getTickets().call({
+            from: accounts[0]
+        });
+
         assert.ok(initialBalance - finalBalance < gasOffset);
+        assert.equal(tickets.length, 0);
     });
 });

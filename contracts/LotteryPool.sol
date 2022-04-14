@@ -27,12 +27,7 @@ contract LotteryPool {
         tickets.push(payable(msg.sender));
     }
 
-    function getTickets()
-        public
-        view
-        restricted
-        returns (address payable[] memory)
-    {
+    function getTickets() public view returns (address payable[] memory) {
         return tickets;
     }
 
