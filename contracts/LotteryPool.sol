@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 contract LotteryPool {
-    uint256 private minPayin = 0.001 ether;
+    uint256 public minPayin = 0.001 ether;
     address public admin;
     address payable[] private tickets = new address payable[](0);
 
